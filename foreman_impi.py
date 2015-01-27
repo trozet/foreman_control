@@ -1,11 +1,8 @@
 import requests
 import json
 from ast import literal_eval
-<<<<<<< HEAD
 from time import sleep
 
-=======
->>>>>>> bf0b312f0f0393f643cca4fda95e8f7ddbf251ff
 
 def rebuildHost(node, server, user='admin', password='admin'):
   auth=(user,password)
@@ -21,7 +18,6 @@ def rebuildHost(node, server, user='admin', password='admin'):
   if r.status_code != requests.codes.ok:
     print 'Failure to set boot to PXE for node %s' % node
     return r.status_code
-<<<<<<< HEAD
 
   reloaded=0
   
@@ -57,31 +53,6 @@ def rebuildHost(node, server, user='admin', password='admin'):
     print 'Rebuiding...'
     return 1
      
-=======
-  data=json.dumps({'power_action': 'status'})
-  r = requests.put(url + 'hosts/%s/power' % node, data=data, headers=headers, auth=auth)
-  if r.status_code != requests.codes.ok:
-    print 'Unable to get power status for node %s' % node
-    return r.status_code
-  result= str(r.text)
-  result= literal_eval(result)
-  if result['power'] == 'on':
-    print 'Power is on, rebooting...'
-    data=json.dumps({'power_action': 'reboot'})
-    r = requests.put(url + 'hosts/%s/power' % node, data=data, headers=headers, auth=auth)
-  elif result['power'] == 'off':
-    data=json.dumps({'power_action': 'start'})
-    r = requests.put(url + 'hosts/%s/power' % node, data=data, headers=headers, auth=auth)
-  else:
-    raise RuntimeError('Unable to detect state of node')
-    return 0
-  if r.status_code != requests.codes.ok:
-    print 'Rebuild Failed'
-  else:
-    print 'Rebuiding...'
-    
-  return r.status_code
->>>>>>> bf0b312f0f0393f643cca4fda95e8f7ddbf251ff
   
 
 if __name__ == '__main__':
